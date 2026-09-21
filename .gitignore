@@ -1,0 +1,18 @@
+.env
+.DS_Store
+*.log
+
+# Java
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# Node and Python (reserved for later services)
+frontend/node_modules/
+frontend/dist/
+optimizer/.venv/
+__pycache__/
+*.py[cod]
+
+# IDE files
+.idea/
+*.iml
