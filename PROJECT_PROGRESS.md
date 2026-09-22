@@ -141,6 +141,15 @@ Fields:
 
 The constructor rejects a missing or negative purchase price and records the purchase time automatically.
 
+### `Bid` and `BidRecommendation`
+
+Locations:
+
+- `backend/src/main/java/com/padel/draft/domain/bid/Bid.java`
+- `backend/src/main/java/com/padel/draft/domain/bid/BidRecommendation.java`
+
+`Bid` records one current-price evaluation for a player. It stores the draft session, player, current amount, AI recommended maximum, recommendation label, and evaluation time. `BidRecommendation` allows `STRONG_BUY`, `BUY`, `CAUTION`, and `PASS`.
+
 ## Design decisions
 
 - Use normal auto-generated numeric IDs (`Long` with `GenerationType.IDENTITY`) rather than UUIDs for easier learning and readability.
@@ -152,7 +161,7 @@ The constructor rejects a missing or negative purchase price and records the pur
 
 ## Next task
 
-Create the next domain entity: `Bid`. It will store each auction price evaluated for a player, the recommendation at that price, and the time of the bid.
+Create the repository layer next, starting with `UserRepository`. Repositories will let services save and retrieve the domain entities from PostgreSQL.
 
 ## Verification
 
