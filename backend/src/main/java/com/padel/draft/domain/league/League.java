@@ -31,7 +31,7 @@ public class League {
     @Column(nullable= false)
     private int squadSize;
 
-    @Column(nullable = false)
+
     private LocalDateTime createdAt;
 
     public League(User owner, String name, BigDecimal salaryCap, int squadSize) {
