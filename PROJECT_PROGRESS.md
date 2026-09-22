@@ -119,17 +119,23 @@ New players start as `AVAILABLE`. Buying a player changes the status to `PURCHAS
 
 Create the draft domain package and then implement:
 
-1. `DraftSessionStatus` enum with `SETUP`, `ACTIVE`, and `COMPLETED`.
-2. `DraftSession` entity containing the current auction state:
+1. `DraftSession` entity containing the current auction state:
    - `id`
    - `league`
    - `startingBudget`
    - `remainingBudget`
    - `squadSize`
    - `remainingSlots`
-   - `status`
    - `startedAt`
    - `completedAt`
+
+The session will not have a status enum. Its lifecycle will be derived from timestamps:
+
+```text
+startedAt is null                  -> setup
+startedAt has a value, completedAt is null -> active
+completedAt has a value            -> completed
+```
 
 ## Verification
 
