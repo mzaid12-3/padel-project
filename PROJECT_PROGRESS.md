@@ -106,6 +106,25 @@ REMOVED
 
 New players start as `AVAILABLE`. Buying a player changes the status to `PURCHASED`; manually removed or unavailable players can be marked `REMOVED`.
 
+### `DraftSession`
+
+Location: `backend/src/main/java/com/padel/draft/domain/draft/DraftSession.java`
+
+Represents one auction run for a league.
+
+Fields:
+
+- auto-generated numeric `Long id`
+- many-to-one `league`
+- `startingBudget`
+- `remainingBudget`
+- `squadSize`
+- `remainingSlots`
+- nullable `startedAt`
+- nullable `completedAt`
+
+There is deliberately no status enum. The lifecycle is derived from the timestamps.
+
 ## Design decisions
 
 - Use normal auto-generated numeric IDs (`Long` with `GenerationType.IDENTITY`) rather than UUIDs for easier learning and readability.
@@ -117,25 +136,7 @@ New players start as `AVAILABLE`. Buying a player changes the status to `PURCHAS
 
 ## Next task
 
-Create the draft domain package and then implement:
-
-1. `DraftSession` entity containing the current auction state:
-   - `id`
-   - `league`
-   - `startingBudget`
-   - `remainingBudget`
-   - `squadSize`
-   - `remainingSlots`
-   - `startedAt`
-   - `completedAt`
-
-The session will not have a status enum. Its lifecycle will be derived from timestamps:
-
-```text
-startedAt is null                  -> setup
-startedAt has a value, completedAt is null -> active
-completedAt has a value            -> completed
-```
+Create the next domain entity: `SquadPlayer`. It will connect a purchased player to a draft session and store the purchase price and purchase time.
 
 ## Verification
 
