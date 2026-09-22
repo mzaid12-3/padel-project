@@ -125,6 +125,22 @@ Fields:
 
 There is deliberately no status enum. The lifecycle is derived from the timestamps.
 
+### `SquadPlayer`
+
+Location: `backend/src/main/java/com/padel/draft/domain/squad/SquadPlayer.java`
+
+Represents a player purchased into a squad during a draft session.
+
+Fields:
+
+- auto-generated numeric `Long id`
+- many-to-one `draftSession`
+- many-to-one `player`
+- `purchasePrice`
+- `purchasedAt`
+
+The constructor rejects a missing or negative purchase price and records the purchase time automatically.
+
 ## Design decisions
 
 - Use normal auto-generated numeric IDs (`Long` with `GenerationType.IDENTITY`) rather than UUIDs for easier learning and readability.
@@ -136,7 +152,7 @@ There is deliberately no status enum. The lifecycle is derived from the timestam
 
 ## Next task
 
-Create the next domain entity: `SquadPlayer`. It will connect a purchased player to a draft session and store the purchase price and purchase time.
+Create the next domain entity: `Bid`. It will store each auction price evaluated for a player, the recommendation at that price, and the time of the bid.
 
 ## Verification
 
