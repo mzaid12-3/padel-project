@@ -159,9 +159,20 @@ Locations:
 - No test-driven development for now. We are verifying progress with compilation and the generated Spring Boot context test. Add focused tests later when the auction rules become more complex.
 - A league has one owner in the MVP. Multiple owners would require a many-to-many relationship and a bridge table, which is intentionally postponed.
 
+## Repository layer completed
+
+Spring Data JPA repositories are now available for every persisted aggregate:
+
+- `UserRepository`: find a user by email and check whether an email is already used.
+- `LeagueRepository`: list leagues owned by a user.
+- `PlayerRepository`: list league players, filter them by status, and detect duplicate names within a league.
+- `DraftSessionRepository`: retrieve a league's most recent draft session.
+- `SquadRepository`: retrieve a draft squad in purchase order and prevent a player being added twice to that draft.
+- `BidRepository`: retrieve draft bid history, including a specific player's bid history.
+
 ## Next task
 
-Create the repository layer next, starting with `UserRepository`. Repositories will let services save and retrieve the domain entities from PostgreSQL.
+Create the service layer, beginning with user and league creation. Services will enforce the application rules and use these repositories for persistence.
 
 ## Verification
 
@@ -177,6 +188,19 @@ The current implementation was committed and pushed as:
 ```text
 7737d4b Reset project and add initial domain model
 ```
+
+The repository layer compiles with `mvn compile`. The full Spring context test also passes with PostgreSQL running locally on `localhost:5433`.
+
+## Service-layer learning sequence
+
+We will implement the service layer one small operation at a time, reviewing and verifying each operation before moving on:
+
+1. `UserService` — create a user, reject duplicate email addresses, and retrieve an existing user by ID. Completed and verified with `mvn test`.
+2. `LeagueService` — create a league for an existing user, list an owner's leagues, and retrieve a league by ID. Completed and verified with `mvn test`.
+3. `PlayerService` — add a player, retrieve a player, list all league players, list only auction-available players, and update player status. Completed and verified with `mvn test`.
+4. Draft-session and auction operations — start a draft, prevent more than one active draft per league, retrieve the active draft, and buy a player while updating the squad, budget, slots, status, and completion time atomically. Completed and verified with `mvn test`; pass and squad-reading operations remain.
+
+The next hands-on task is `UserService#createUser`.
 
 ## Known cleanup before production
 
